@@ -8,7 +8,7 @@ The tool supports single or multiple inscriptions in all input of the transactio
 
 # Installation
 ```
-go get https://github.com/balletcrypto/bitcoin-inscription-parser
+go get github.com/balletcrypto/bitcoin-inscription-parser
 ```
 # Example
 ```go
