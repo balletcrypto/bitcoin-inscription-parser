@@ -327,7 +327,7 @@ func TestScriptWithUnrecognizedEvenTag(t *testing.T) {
 	}{
 		testCase: "test script with unrecognized even tag",
 		script:   script,
-		expected: false,
+		expected: true,
 	}
 
 	inscriptions := parser.ParseInscriptions(test.script)

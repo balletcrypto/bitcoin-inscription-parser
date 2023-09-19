@@ -20,9 +20,10 @@ type TransactionInscription struct {
 }
 
 type InscriptionContent struct {
-	ContentType   string
-	ContentBody   []byte
-	ContentLength uint64
+	ContentType             string
+	ContentBody             []byte
+	ContentLength           uint64
+	IsUnrecognizedEvenField bool
 }
 
 func ParseInscriptionsFromTransaction(msgTx *wire.MsgTx) []*TransactionInscription {
@@ -100,10 +101,11 @@ func ParseInscriptions(witnessScript []byte) []*InscriptionContent {
 
 func parseOneInscription(tokenizer *txscript.ScriptTokenizer) *InscriptionContent {
 	var (
-		tags          = make(map[string][]byte)
-		contentType   string
-		contentBody   []byte
-		contentLength uint64
+		tags                    = make(map[string][]byte)
+		contentType             string
+		contentBody             []byte
+		contentLength           uint64
+		isUnrecognizedEvenField bool
 	)
 
 	// Find any pushed data in the script. This includes OP_0, but not OP_1 - OP_16.
@@ -171,14 +173,16 @@ func parseOneInscription(tokenizer *txscript.ScriptTokenizer) *InscriptionConten
 		// Unrecognized even tag
 		tag, _ := hex.DecodeString(key)
 		if len(tag) > 0 && int(tag[0])%2 == 0 {
-			return nil
+			isUnrecognizedEvenField = true
+			continue
 		}
 	}
 
 	inscription := &InscriptionContent{
-		ContentType:   contentType,
-		ContentBody:   contentBody,
-		ContentLength: contentLength,
+		ContentType:             contentType,
+		ContentBody:             contentBody,
+		ContentLength:           contentLength,
+		IsUnrecognizedEvenField: isUnrecognizedEvenField,
 	}
 	return inscription
 }
