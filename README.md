@@ -105,6 +105,7 @@ PASS
 PASS
 
 === RUN   TestScriptWithUnrecognizedEvenTag
+    script_parser_test.go:336: Find inscription with content type: text/plain;charset=utf-8, content length: 38
     script_parser_test.go:342: test script with unrecognized even tag: test passed
 --- PASS: TestScriptWithUnrecognizedEvenTag (0.00s)
 PASS
