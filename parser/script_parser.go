@@ -143,7 +143,8 @@ func parseOneInscription(tokenizer *txscript.ScriptTokenizer) *InscriptionConten
 				return nil
 			}
 			if tokenizer.Next() {
-				if tokenizer.Data() == nil {
+				if tokenizer.Opcode() != txscript.OP_0 && tokenizer.Data() == nil {
+					// Invalid data length, e.g., 0b71bd09c848be66334c0cdaa32686e98dffa8a212af694f59165cdbb588e587
 					return nil
 				}
 				tags[tag] = tokenizer.Data()

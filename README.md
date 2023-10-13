@@ -110,36 +110,46 @@ PASS
 --- PASS: TestScriptWithUnrecognizedEvenTag (0.00s)
 PASS
 
+=== RUN   TestScriptWithNoContentTypeTag
+    script_parser_test.go:369: Find inscription with content type: , content length: 36
+    script_parser_test.go:375: test script with no content type tag: test passed
+--- PASS: TestScriptWithNoContentTypeTag (0.00s)
+PASS
+
 === RUN   TestScriptWithNoContentType
-    script_parser_test.go:369: Find inscription with content type: , content length: 32
-    script_parser_test.go:375: test script with no content type: test passed
+    script_parser_test.go:405: Find inscription with content type: , content length: 32
+    script_parser_test.go:411: test script with no content type: test passed
 --- PASS: TestScriptWithNoContentType (0.00s)
 PASS
 
 === RUN   TestScriptWithNoContentBody
-    script_parser_test.go:403: Find inscription with content type: text/plain;charset=utf-8, content length: 0
-    script_parser_test.go:409: test script with no content body: test passed
+    script_parser_test.go:439: Find inscription with content type: text/plain;charset=utf-8, content length: 0
+    script_parser_test.go:445: test script with no content body: test passed
 --- PASS: TestScriptWithNoContentBody (0.00s)
 PASS
 
+=== RUN   TestScriptWithInvalidDtaLength
+    script_parser_test.go:483: test script with invalid data length: test passed
+--- PASS: TestScriptWithInvalidDtaLength (0.00s)
+PASS
+
 === RUN   TestScriptWithZeroPush
-    script_parser_test.go:438: Find inscription with content type: text/plain;charset=utf-8, content length: 0
-    script_parser_test.go:444: test script with zero push: test passed
+    script_parser_test.go:512: Find inscription with content type: text/plain;charset=utf-8, content length: 0
+    script_parser_test.go:518: test script with zero push: test passed
 --- PASS: TestScriptWithZeroPush (0.00s)
 PASS
 
 === RUN   TestScriptWithMultiplePushes
-    script_parser_test.go:475: Find inscription with content type: text/plain;charset=utf-8, content length: 66
-    script_parser_test.go:481: test script with multiple pushes: test passed
+    script_parser_test.go:549: Find inscription with content type: text/plain;charset=utf-8, content length: 66
+    script_parser_test.go:555: test script with multiple pushes: test passed
 --- PASS: TestScriptWithMultiplePushes (0.00s)
 PASS
 
 === RUN   TestScriptWithNoEndIf
 === PAUSE TestScriptWithNoEndIf
 === CONT  TestScriptWithNoEndIf
-    script_parser_test.go:535: test script with no END_IF: test passed
-    script_parser_test.go:535: test script with no END_IF: test passed
+    script_parser_test.go:609: test script with no END_IF: test passed
+    script_parser_test.go:609: test script with no END_IF: test passed
 --- PASS: TestScriptWithNoEndIf (0.00s)
 PASS
-ok      command-line-arguments  0.173s
 ```
