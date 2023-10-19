@@ -126,7 +126,7 @@ func TestScriptWithMultipleInscriptions(t *testing.T) {
 	if expected == test.expected {
 		t.Logf("%s: test passed", test.testCase)
 	} else {
-		t.Errorf("%s: test passed", test.testCase)
+		t.Errorf("%s: test failed", test.testCase)
 	}
 }
 
@@ -303,7 +303,7 @@ func TestScriptWithOtherOpcodeBeforeEndIf(t *testing.T) {
 	if exist == test.expected {
 		t.Logf("%s: test passed", test.testCase)
 	} else {
-		t.Errorf("%s: test passed", test.testCase)
+		t.Errorf("%s: test failed", test.testCase)
 	}
 }
 
@@ -341,7 +341,40 @@ func TestScriptWithUnrecognizedEvenTag(t *testing.T) {
 	if exist == test.expected {
 		t.Logf("%s: test passed", test.testCase)
 	} else {
-		t.Errorf("%s: test passed", test.testCase)
+		t.Errorf("%s: test failed", test.testCase)
+	}
+}
+
+func TestScriptWithNoContentTypeTag(t *testing.T) {
+	script, _ := txscript.NewScriptBuilder().
+		AddOps([]byte{txscript.OP_FALSE, txscript.OP_IF}).
+		AddData([]byte("ord")).
+		AddOp(txscript.OP_0).
+		AddData([]byte("test script with no content type tag")).
+		AddOp(txscript.OP_ENDIF).Script()
+
+	test := struct {
+		testCase string
+		script   []byte
+		expected bool
+	}{
+		testCase: "test script with no content type tag",
+		script:   script,
+		expected: true,
+	}
+
+	inscriptions := parser.ParseInscriptions(test.script)
+	if len(inscriptions) != 0 {
+		for i := range inscriptions {
+			t.Logf("Find inscription with content type: %s, content length: %d", inscriptions[i].ContentType,
+				inscriptions[i].ContentLength)
+		}
+	}
+	exist := len(inscriptions) != 0
+	if exist == test.expected {
+		t.Logf("%s: test passed", test.testCase)
+	} else {
+		t.Errorf("%s: test failed", test.testCase)
 	}
 }
 
@@ -349,6 +382,9 @@ func TestScriptWithNoContentType(t *testing.T) {
 	script, _ := txscript.NewScriptBuilder().
 		AddOps([]byte{txscript.OP_FALSE, txscript.OP_IF}).
 		AddData([]byte("ord")).
+		AddOp(txscript.OP_DATA_1).
+		AddOp(txscript.OP_DATA_1).
+		AddOp(txscript.OP_0).
 		AddOp(txscript.OP_0).
 		AddData([]byte("test script with no content type")).
 		AddOp(txscript.OP_ENDIF).Script()
@@ -374,7 +410,7 @@ func TestScriptWithNoContentType(t *testing.T) {
 	if exist == test.expected {
 		t.Logf("%s: test passed", test.testCase)
 	} else {
-		t.Errorf("%s: test passed", test.testCase)
+		t.Errorf("%s: test failed", test.testCase)
 	}
 }
 
@@ -408,7 +444,45 @@ func TestScriptWithNoContentBody(t *testing.T) {
 	if exist == test.expected {
 		t.Logf("%s: test passed", test.testCase)
 	} else {
-		t.Errorf("%s: test passed", test.testCase)
+		t.Errorf("%s: test failed", test.testCase)
+	}
+}
+
+func TestScriptWithInvalidDtaLength(t *testing.T) {
+	script, _ := txscript.NewScriptBuilder().
+		AddOps([]byte{txscript.OP_FALSE, txscript.OP_IF}).
+		AddData([]byte("ord")).
+		AddOp(txscript.OP_DATA_1).
+		AddOp(txscript.OP_DATA_1).
+		AddData([]byte("text/plain;charset=utf-8")).
+		AddOp(txscript.OP_DATA_1).
+		AddOp(txscript.OP_DATA_66).
+		AddOp(txscript.OP_0).
+		AddData([]byte{0x62, 0x6f, 0x62, 0x2e, 0x73, 0x61, 0x74, 0x73, 0x0a}).
+		AddOp(txscript.OP_ENDIF).Script()
+
+	test := struct {
+		testCase string
+		script   []byte
+		expected bool
+	}{
+		testCase: "test script with invalid data length",
+		script:   script,
+		expected: false,
+	}
+
+	inscriptions := parser.ParseInscriptions(test.script)
+	if len(inscriptions) != 0 {
+		for i := range inscriptions {
+			t.Logf("Find inscription with content type: %s, content length: %d", inscriptions[i].ContentType,
+				inscriptions[i].ContentLength)
+		}
+	}
+	exist := len(inscriptions) != 0
+	if exist == test.expected {
+		t.Logf("%s: test passed", test.testCase)
+	} else {
+		t.Errorf("%s: test failed", test.testCase)
 	}
 }
 
@@ -443,7 +517,7 @@ func TestScriptWithZeroPush(t *testing.T) {
 	if exist == test.expected {
 		t.Logf("%s: test passed", test.testCase)
 	} else {
-		t.Errorf("%s: test passed", test.testCase)
+		t.Errorf("%s: test failed", test.testCase)
 	}
 }
 
@@ -480,7 +554,7 @@ func TestScriptWithMultiplePushes(t *testing.T) {
 	if exist == test.expected {
 		t.Logf("%s: test passed", test.testCase)
 	} else {
-		t.Errorf("%s: test passed", test.testCase)
+		t.Errorf("%s: test failed", test.testCase)
 	}
 }
 
