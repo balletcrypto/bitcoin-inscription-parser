@@ -132,7 +132,8 @@ func parseOneInscription(tokenizer *txscript.ScriptTokenizer) *InscriptionConten
 					return nil
 				}
 			}
-			tags[BodyTag] = body
+			contentBody = body
+			contentLength = uint64(len(body))
 			break
 		} else {
 			if tokenizer.Data() == nil {
@@ -169,16 +170,10 @@ func parseOneInscription(tokenizer *txscript.ScriptTokenizer) *InscriptionConten
 			contentType = string(tags[ContentTypeTag])
 			continue
 		}
-		if key == BodyTag {
-			contentBody = tags[BodyTag]
-			contentLength = uint64(len(contentBody))
-			continue
-		}
 		// Unrecognized even tag
 		tag, _ := hex.DecodeString(key)
 		if len(tag) > 0 && int(tag[0])%2 == 0 {
 			isUnrecognizedEvenField = true
-			continue
 		}
 	}
 
