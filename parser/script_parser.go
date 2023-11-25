@@ -2,6 +2,7 @@ package parser
 
 import (
 	"encoding/hex"
+
 	"github.com/btcsuite/btcd/txscript"
 	"github.com/btcsuite/btcd/wire"
 	log "github.com/sirupsen/logrus"
@@ -20,7 +21,7 @@ type TransactionInscription struct {
 }
 
 type InscriptionContent struct {
-	ContentType             string
+	ContentType             []byte
 	ContentBody             []byte
 	ContentLength           uint64
 	IsUnrecognizedEvenField bool
@@ -102,7 +103,7 @@ func ParseInscriptions(witnessScript []byte) []*InscriptionContent {
 func parseOneInscription(tokenizer *txscript.ScriptTokenizer) *InscriptionContent {
 	var (
 		tags                    = make(map[string][]byte)
-		contentType             string
+		contentType             []byte
 		contentBody             []byte
 		contentLength           uint64
 		isUnrecognizedEvenField bool
@@ -167,7 +168,7 @@ func parseOneInscription(tokenizer *txscript.ScriptTokenizer) *InscriptionConten
 	for k := range tags {
 		key := k
 		if key == ContentTypeTag {
-			contentType = string(tags[ContentTypeTag])
+			contentType = tags[ContentTypeTag]
 			continue
 		}
 		// Unrecognized even tag
