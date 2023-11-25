@@ -1,9 +1,10 @@
 package parser
 
 import (
+	"testing"
+
 	"github.com/balletcrypto/bitcoin-inscription-parser/parser"
 	"github.com/btcsuite/btcd/txscript"
-	"testing"
 )
 
 func TestScriptWithInscription(t *testing.T) {
@@ -72,7 +73,7 @@ func TestScriptWithInscription(t *testing.T) {
 		inscriptions := parser.ParseInscriptions(test.script)
 		if len(inscriptions) != 0 {
 			for i := range inscriptions {
-				t.Logf("Find inscription with content type: %s, content length: %d", inscriptions[i].ContentType,
+				t.Logf("Find inscription with content type: %s, content length: %d", string(inscriptions[i].ContentType),
 					inscriptions[i].ContentLength)
 			}
 		}
@@ -118,7 +119,7 @@ func TestScriptWithMultipleInscriptions(t *testing.T) {
 	inscriptions := parser.ParseInscriptions(test.script)
 	if len(inscriptions) != 0 {
 		for i := range inscriptions {
-			t.Logf("Find inscription with content type: %s, content length: %d", inscriptions[i].ContentType,
+			t.Logf("Find inscription with content type: %s, content length: %d", string(inscriptions[i].ContentType),
 				inscriptions[i].ContentLength)
 		}
 	}
@@ -191,7 +192,7 @@ func TestScriptWithIncompleteEnvelopHeader(t *testing.T) {
 		inscriptions := parser.ParseInscriptions(test.script)
 		if len(inscriptions) != 0 {
 			for i := range inscriptions {
-				t.Logf("Find inscription with content type: %s, content length: %d", inscriptions[i].ContentType,
+				t.Logf("Find inscription with content type: %s, content length: %d", string(inscriptions[i].ContentType),
 					inscriptions[i].ContentLength)
 			}
 		}
@@ -257,7 +258,7 @@ func TestScriptWithDuplicatedTag(t *testing.T) {
 		inscriptions := parser.ParseInscriptions(test.script)
 		if len(inscriptions) != 0 {
 			for i := range inscriptions {
-				t.Logf("Find inscription with content type: %s, content length: %d", inscriptions[i].ContentType,
+				t.Logf("Find inscription with content type: %s, content length: %d", string(inscriptions[i].ContentType),
 					inscriptions[i].ContentLength)
 			}
 		}
@@ -295,7 +296,7 @@ func TestScriptWithOtherOpcodeBeforeEndIf(t *testing.T) {
 	inscriptions := parser.ParseInscriptions(test.script)
 	if len(inscriptions) != 0 {
 		for i := range inscriptions {
-			t.Logf("Find inscription with content type: %s, content length: %d", inscriptions[i].ContentType,
+			t.Logf("Find inscription with content type: %s, content length: %d", string(inscriptions[i].ContentType),
 				inscriptions[i].ContentLength)
 		}
 	}
@@ -333,7 +334,7 @@ func TestScriptWithUnrecognizedEvenTag(t *testing.T) {
 	inscriptions := parser.ParseInscriptions(test.script)
 	if len(inscriptions) != 0 {
 		for i := range inscriptions {
-			t.Logf("Find inscription with content type: %s, content length: %d", inscriptions[i].ContentType,
+			t.Logf("Find inscription with content type: %s, content length: %d", string(inscriptions[i].ContentType),
 				inscriptions[i].ContentLength)
 		}
 	}
@@ -366,7 +367,7 @@ func TestScriptWithNoContentTypeTag(t *testing.T) {
 	inscriptions := parser.ParseInscriptions(test.script)
 	if len(inscriptions) != 0 {
 		for i := range inscriptions {
-			t.Logf("Find inscription with content type: %s, content length: %d", inscriptions[i].ContentType,
+			t.Logf("Find inscription with content type: %s, content length: %d", string(inscriptions[i].ContentType),
 				inscriptions[i].ContentLength)
 		}
 	}
@@ -402,7 +403,7 @@ func TestScriptWithNoContentType(t *testing.T) {
 	inscriptions := parser.ParseInscriptions(test.script)
 	if len(inscriptions) != 0 {
 		for i := range inscriptions {
-			t.Logf("Find inscription with content type: %s, content length: %d", inscriptions[i].ContentType,
+			t.Logf("Find inscription with content type: %s, content length: %d", string(inscriptions[i].ContentType),
 				inscriptions[i].ContentLength)
 		}
 	}
@@ -436,7 +437,7 @@ func TestScriptWithNoContentBody(t *testing.T) {
 	inscriptions := parser.ParseInscriptions(test.script)
 	if len(inscriptions) != 0 {
 		for i := range inscriptions {
-			t.Logf("Find inscription with content type: %s, content length: %d", inscriptions[i].ContentType,
+			t.Logf("Find inscription with content type: %s, content length: %d", string(inscriptions[i].ContentType),
 				inscriptions[i].ContentLength)
 		}
 	}
@@ -474,7 +475,7 @@ func TestScriptWithInvalidDtaLength(t *testing.T) {
 	inscriptions := parser.ParseInscriptions(test.script)
 	if len(inscriptions) != 0 {
 		for i := range inscriptions {
-			t.Logf("Find inscription with content type: %s, content length: %d", inscriptions[i].ContentType,
+			t.Logf("Find inscription with content type: %s, content length: %d", string(inscriptions[i].ContentType),
 				inscriptions[i].ContentLength)
 		}
 	}
@@ -509,7 +510,7 @@ func TestScriptWithZeroPush(t *testing.T) {
 	inscriptions := parser.ParseInscriptions(test.script)
 	if len(inscriptions) != 0 {
 		for i := range inscriptions {
-			t.Logf("Find inscription with content type: %s, content length: %d", inscriptions[i].ContentType,
+			t.Logf("Find inscription with content type: %s, content length: %d", string(inscriptions[i].ContentType),
 				inscriptions[i].ContentLength)
 		}
 	}
@@ -546,7 +547,7 @@ func TestScriptWithMultiplePushes(t *testing.T) {
 	inscriptions := parser.ParseInscriptions(test.script)
 	if len(inscriptions) != 0 {
 		for i := range inscriptions {
-			t.Logf("Find inscription with content type: %s, content length: %d", inscriptions[i].ContentType,
+			t.Logf("Find inscription with content type: %s, content length: %d", string(inscriptions[i].ContentType),
 				inscriptions[i].ContentLength)
 		}
 	}
@@ -600,7 +601,7 @@ func TestScriptWithNoEndIf(t *testing.T) {
 		inscriptions := parser.ParseInscriptions(test.script)
 		if len(inscriptions) != 0 {
 			for i := range inscriptions {
-				t.Logf("Find inscription with content type: %s, content length: %d", inscriptions[i].ContentType,
+				t.Logf("Find inscription with content type: %s, content length: %d", string(inscriptions[i].ContentType),
 					inscriptions[i].ContentLength)
 			}
 		}

@@ -40,6 +40,6 @@ func main() {
 	for _, v := range transactionInscriptions {
 		ins := v
 		log.Infof("INCRIPTION txin index: %d, tx in offset: %d, content type: %s, content length: %d",
-			ins.TxInIndex, ins.TxInOffset, ins.Inscription.ContentType, ins.Inscription.ContentLength)
+			ins.TxInIndex, ins.TxInOffset, string(ins.Inscription.ContentType), ins.Inscription.ContentLength)
 	}
 }
